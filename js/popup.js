@@ -20,21 +20,9 @@ function restore_data() {
 }
 
 function open_tab(forumName) {
-	chrome.tabs.getAllInWindow(undefined, function(tabs) {
-		for (var i = 0, tab; tab = tabs[i]; i++) {
-			if (tab.url && background.isSqlexUrl(tab.url, forumName)) {
-				console.log('Found sql-ex tab: ' + tab.url + '. ' +
-							'Focusing and refreshing count...');
-				chrome.tabs.update(tab.id, {selected: true});
-				background.startRequest({scheduleRequest:false, showLoadingAnimation:false});
-				return;
-			}
-		}
-		console.log('Could not find sql-ex tab. Creating one...');
-		var win = window.open(background.getSqlexUrl(forumName), '_blank');
-		win.focus();
-		window.close();
-	});
+	var win = window.open(background.getSqlexUrl(forumName), '_blank');
+	win.focus();
+	window.close();
 }
 
 function refresh_data() {
