@@ -1,7 +1,7 @@
 {
 	"background": {
-		"persistent": false,
-		"page": "background.html"
+		"persistent": true,
+		"scripts": ["js/background.js"]
 	},
 	"browser_action": {
 		"default_icon": "images/sqlex_not_logged_in_blue.png",
@@ -25,6 +25,6 @@
 		"*://*.sql-ex.com/*"
 	],
 	"homepage_url": "http://www.sql-ex.com/",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"manifest_version": 2
 }

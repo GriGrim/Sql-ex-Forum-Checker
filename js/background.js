@@ -4,11 +4,6 @@
  * Use of this source code is governed by a BSD license.
  */
 
-var animationFrames = 36;
-var animationSpeed = 10; // ms
-var canvas = document.getElementById('canvas');
-var loggedInImage = document.getElementById('logged_in');
-var canvasContext = canvas.getContext('2d');
 var pollIntervalMin = 1;  // 1 minute
 var pollIntervalMax = 60;  // 1 hour
 var requestTimeout = 1000 * 2;  // 2 seconds
@@ -29,19 +24,8 @@ function getSqlexUrl(forumName) {
 	}
 	return url + "/";
 }
-/*
-// Identifier used to debug the possibility of multiple instances of the
-// extension making requests on behalf of a single user.
-function getInstanceId() {
-  if (!localStorage.hasOwnProperty("instanceId"))
-    localStorage.instanceId = 'gmc' + parseInt(Date.now() * Math.random(), 10);
-  return localStorage.instanceId;
-}
-*/
+
 function getFeedUrl(forumName) {
-  // "zx" is a Gmail query parameter that is expected to contain a random
-  // string and may be ignored/stripped.
-  //return getGmailUrl() + "feed/atom?zx=" + encodeURIComponent(getInstanceId());
   return getSqlexUrl(forumName);
 }
 
@@ -240,13 +224,7 @@ function getForumCount(onSuccess, onError, forumName) {
 		handleError();
 	}
 }
-/*
-function gmailNSResolver(prefix) {
-	if(prefix == 'gmail') {
-		return 'http://purl.org/atom/ns#';
-	}
-}
-*/
+
 function updateUnreadCount(count, forumName) {
 	if (forumName == "L") {
 		var changed = localStorage.unreadCountL != count;
@@ -257,42 +235,10 @@ function updateUnreadCount(count, forumName) {
 		localStorage.unreadCountR = count;
 	}
 	updateIcon();
-	// for not to animate twice (for Lforum.php and forum.php)
-	// we animate only forum.php (it updates later than Lforum.php)
-	if (changed && forumName != "L")
-		animateFlip();
 }
 
 function ease(x) {
 	return (1-Math.sin(Math.PI/2+x*Math.PI))/2;
-}
-
-function animateFlip() {
-	rotation += 1/animationFrames;
-	drawIconAtRotation();
-
-	if (rotation <= 1) {
-		setTimeout(animateFlip, animationSpeed);
-	} else {
-		rotation = 0;
-		updateIcon();
-	}
-}
-
-function drawIconAtRotation() {
-	canvasContext.save();
-	canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-	canvasContext.translate(
-			Math.ceil(canvas.width/2),
-			Math.ceil(canvas.height/2));
-	canvasContext.rotate(2*Math.PI*ease(rotation));
-	canvasContext.drawImage(loggedInImage,
-			-Math.ceil(canvas.width/2),
-			-Math.ceil(canvas.height/2));
-	canvasContext.restore();
-
-	chrome.browserAction.setIcon({imageData:canvasContext.getImageData(0, 0,
-			canvas.width,canvas.height)});
 }
 
 function onInit() {
