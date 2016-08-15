@@ -83,16 +83,28 @@ fieldset.props ul.column li:nth-child(1) span::after {
 	content: '__MSG_sqlexcheck_forum_name_l__'
 }
 fieldset.props ul.column li:nth-child(2) span::after {
-	content: '__MSG_sqlexcheck_forum_name_r__'
+  content: '__MSG_sqlexcheck_forum_name_la__'
 }
 fieldset.props ul.column li:nth-child(3) span::after {
-	content: '__MSG_sqlexcheck_forum_name_b__'
+	content: '__MSG_sqlexcheck_forum_name_r__'
 }
-.label-important::before {
-	content: '__MSG_sqlexcheck_note_title__'
+fieldset.props ul.column li:nth-child(4) span::after {
+  content: '__MSG_sqlexcheck_forum_name_ra__'
 }
-p::after {
-	content: '__MSG_sqlexcheck_note_text__'
+fieldset.props ul.column li:nth-child(5) span::after {
+  content: '__MSG_sqlexcheck_forum_name_o__'
+}
+fieldset.props ul.column li:nth-child(6) span::after {
+  content: '__MSG_sqlexcheck_forum_name_oa__'
+}
+fieldset.props ul.column li:nth-child(7) span::after {
+  content: '__MSG_sqlexcheck_forum_name_dml__'
+}
+fieldset.props ul.column li:nth-child(8) span::after {
+  content: '__MSG_sqlexcheck_forum_name_dmla__'
+}
+fieldset.props ul.column li:nth-child(9) span::after {
+  content: '__MSG_sqlexcheck_forum_name_other__'
 }
 .footer .content::after {
 	content: '__MSG_sqlexcheck_copyright__'

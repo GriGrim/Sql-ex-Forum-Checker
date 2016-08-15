@@ -8,9 +8,13 @@
 "sqlexcheck_options_title":{"message":"Options"},
 "sqlexcheck_options_header":{"message":"Choose stage to maintain"},
 "sqlexcheck_forum_name_l":{"message":"Learning"},
+"sqlexcheck_forum_name_la":{"message":"Learning (my exercises)"},
 "sqlexcheck_forum_name_r":{"message":"Rating"},
-"sqlexcheck_forum_name_b":{"message":"Both"},
-"sqlexcheck_note_title":{"message":"Note"},
-"sqlexcheck_note_text":{"message":"After changing these options they take effect immediately"},
-"sqlexcheck_copyright":{"message":"Copyright \u00A9 2013 Danila Chebykin"}
+"sqlexcheck_forum_name_ra":{"message":"Rating (my exercises)"},
+"sqlexcheck_forum_name_o":{"message":"Optional"},
+"sqlexcheck_forum_name_oa":{"message":"Optional (my exercises)"},
+"sqlexcheck_forum_name_dml":{"message":"DML"},
+"sqlexcheck_forum_name_dmla":{"message":"DML (my exercises)"},
+"sqlexcheck_forum_name_other":{"message":"Other"},
+"sqlexcheck_copyright":{"message":"Copyright \u00A9 2016 Danila Chebykin"}
 }

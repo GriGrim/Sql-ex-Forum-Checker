@@ -8,27 +8,24 @@
 	<script type="text/javascript" src="js/popup.js"></script>
 </head>
 	<body>
-		<div id="refresh" class="refresh-block">
+		<div id="refresh" class="control">
 			<a class="refresh" href="#refresh"></a>
 		</div>
-		<div id="options" class="options-block">
+		<div id="options" class="control">
 			<a class="options" href="#options"></a>
 		</div>
-		<div id="close" class="close-block">
+		<div id="close" class="control">
 			<a class="close" href="#close"></a>
 		</div>
 
-		<div id="LforumInfo" class="counter">
-			<fieldset class="props">
-				<legend></legend>
-				<div id="countL" class="value"></div>
-			</fieldset>
-		</div>
-		<div id="RforumInfo" class="counter">
-			<fieldset class="props">
-				<legend></legend>
-				<div id="countR" class="value"></div>
-			</fieldset>
+		<div class="container">
+			<ul class="menu">
+				<li><a id="LforumInfo" href="#"><span id="L"></span><em id="LA"></em></a></li>
+				<li><a id="RforumInfo" href="#"><span id="R"></span><em id="RA"></em></a></li>
+				<li><a id="OforumInfo" href="#"><span id="O"></span><em id="OA"></em></a></li>
+				<li><a id="DMLforumInfo" href="#"><span id="DML"></span><em id="DMLA"></em></a></li>
+				<li><a id="OtherforumInfo" href="#"><span id="Other"></span></a></li>
+			</ul>
 		</div>
 	</body>
 </html>

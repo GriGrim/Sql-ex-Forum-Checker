@@ -1,50 +1,100 @@
-body { font: 13px/1.3em 'Trebuchet MS', Sans-Serif; width: 310px; height: 100px; margin: auto; overflow: hidden; }
+body { width: 250px; margin: auto; overflow: hidden; }
 
-.refresh-block a.refresh {
-	position: absolute; top: 12px; width: 16px; height: 20px; margin-left: 10px;
-	background: url(../images/icon-refresh.png) no-repeat 50% 0; padding-top: 18px; 
+.control a {
+	position: absolute; top: 12px; width: 16px; height: 16px;
 }
-.refresh-block a:hover.refresh { background-position: 50% -60px; color: #cc0000; }
-
-.close-block a.close { 
-	position: absolute; top: 12px; width: 20px; height: 20px; margin-left: 280px;
-	background: url(../images/icon-close.png) no-repeat 50% 0; height: 18px; width: 16px;
+.control a.refresh {
+	margin-left: 10px;
+	background: url(../images/icon-refresh.png) no-repeat 50% 0;
 }
-.close-block a:hover.close { background-position: 50% -60px; color: #cc0000; }
-
-.options-block a.options { 
-	position: absolute; top: 10px; width: 20px; height: 20px; margin-left: 40px;
+.control a.close {
+	margin-left: 220px;
+	background: url(../images/icon-close.png) no-repeat 50% 0;
+}
+.control a.options {
+	margin-left: 42px;
 	background: url(../images/icon-options.png) no-repeat 50% 0;
 }
-.options-block a:hover.options { background-position: 50% -30px; color: #cc0000; }
+.control a:hover { background-position: 50% -16px; }
 
-.counter  {
-	margin: 30px 0px;
-	padding: 0px 5px 5px 5px;
+.container { margin-top: 40px; }
+
+.menu,
+.menu ul,
+.menu li,
+.menu a,
+.menu span {
+	margin: 0;
+	padding: 0;
+	border: none;
+	outline: none;
+}
+.menu li {
+	list-style: none;
+}
+
+.menu li a {
+	display: block;
+	position: relative;
+	min-width: 150px;
+	padding: 0 10px 0 10px;
+
+	color: #797979;
+	font: bold 12px/32px 'Trebuchet MS', Arial, sans-serif;
+	text-decoration: none;
+
+	border-bottom: 1px solid #c9c9c9;
+	border-left: 5px solid #fff;
+}
+
+.menu li:last-child a { border-bottom: none; }
+
+.menu li > a span {
+	display: block;
 	position: absolute;
-	text-align: center;
-	cursor: pointer;
+	top: 7px;
+	right: 0;
+	padding: 0 10px;
+	margin-right: 40px;
+
+	color: #000;
+	text-shadow: 1px 1px 0px rgba(255,255,255, .2);
+	font: normal bold 12px/18px 'Trebuchet MS', Arial, sans-serif;
+	background: transparent;
+	border: 1px solid #d8d8d8;
+
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
-fieldset.props {
-	width: 120px; height: 50px;
-	border: 1px solid #c6d6e2;
+.menu em {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 14px;
+	color: #000;
+	font: normal 10px/32px 'Trebuchet MS', Arial, sans-serif;
 }
-#LforumInfo fieldset {
-	background: url(../images/fieldset-bg-l.png) repeat-x;
+
+.menu > li:hover > a,
+.menu > li:target > a {
+	background: #f6f6f6;
+	border-left: 5px solid #c84825;
 }
-#RforumInfo {
-	margin-left: 155px;
-}
-#RforumInfo fieldset {
-	background: url(../images/fieldset-bg-r.png) repeat-x;
-}
-#LforumInfo fieldset.props legend::after {
+
+#LforumInfo::before {
 	content: '__MSG_sqlexcheck_forum_name_l__'
 }
-#RforumInfo fieldset.props legend::after {
+#RforumInfo::before {
 	content: '__MSG_sqlexcheck_forum_name_r__'
 }
-.value {
-	font-size: 30px;
-	padding-top: 10px;
+#OforumInfo::before {
+	content: '__MSG_sqlexcheck_forum_name_o__'
+}
+#DMLforumInfo::before {
+	content: '__MSG_sqlexcheck_forum_name_dml__'
+}
+#OtherforumInfo::before {
+	content: '__MSG_sqlexcheck_forum_name_other__'
 }

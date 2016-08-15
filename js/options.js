@@ -9,9 +9,11 @@ function restore_options() {
 	var elements = document.getElementsByClassName("cb");
 	for (var i = 0, len = elements.length; i < len; i++) {
 		var child = elements[i];
-		if (child.value == forum) {
-			child.checked = "true";
-			break;
+		if (forum.indexOf("|" + child.value + "|") != -1) {
+			child.checked = true;
+		}
+		else {
+			child.checked = false;
 		}
 	}
 }
@@ -21,8 +23,16 @@ function init() {
 	var elements = document.getElementsByClassName('cb');
 	for (var i = 0, len = elements.length; i < len; i++) {
 		elements[i].onclick = function() {
-			localStorage["forumSelected"] = this.value;
-			background.animateFlip();
+			if (this.checked) {
+				if (localStorage["forumSelected"].indexOf("|" + this.value + "|") == -1) {
+					localStorage["forumSelected"] += "|" + this.value + "|";
+				}
+			}
+			else {
+				localStorage["forumSelected"] = localStorage["forumSelected"].replace("|" + this.value + "|", "");
+			}
+			background.startRequest({scheduleRequest:true, showLoadingAnimation:true});
+			window.setTimeout(restore_data, 1000); // delay 1 second
 		};
 	}
 }
