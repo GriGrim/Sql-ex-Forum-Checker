@@ -21,6 +21,7 @@
 		"alarms",
 		"tabs",
 		"webNavigation",
+		"notifications",
 		"*://*.sql-ex.ru/*",
 		"*://*.sql-ex.com/*"
 	],

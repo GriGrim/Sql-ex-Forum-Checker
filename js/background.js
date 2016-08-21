@@ -192,9 +192,9 @@ function startRequest(params) {
 		loadingAnimation.start();
 
 	getForumCount(
-		function(count) {
+		function(count, response) {
 			stopLoadingAnimation();
-			updateUnreadCount(count);
+			updateUnreadCount(count, response);
 			updateIcon();
 		},
 		function() {
@@ -211,11 +211,11 @@ function getForumCount(onSuccess, onError) {
 		xhr.abort();  // synchronously calls onreadystatechange
 	}, requestTimeout);
 
-	function handleSuccess(count) {
+	function handleSuccess(count, response) {
 		localStorage.requestFailureCount = 0;
 		window.clearTimeout(abortTimerId);
 		if (onSuccess)
-			onSuccess(count);
+			onSuccess(count, response);
 	}
 
 	var invokedErrorCallback = false;
@@ -236,6 +236,10 @@ function getForumCount(onSuccess, onError) {
 				try {
 					var response = JSON.parse(xhr.responseText);
 					if (!response.ERROR) {
+						var oldResponse = JSON.parse(localStorage["response"]);
+
+						console.log(oldResponse.selectLearning[-1]);
+
 						var selectRating = response.selectRating.filter(function(p) { return p.type === "obligatorySelect" });
 						var selectRatingLen = selectRating.length;
 						var selectRatingAuthorLen = selectRating.filter(function(p) { return p.author === true }).length;
@@ -267,7 +271,7 @@ function getForumCount(onSuccess, onError) {
 							DMLA : dmlAuthorLen
 						};
 
-						handleSuccess(count);
+						handleSuccess(count,xhr.responseText);
 						return;
 					}
 				} catch(e) {
@@ -291,10 +295,11 @@ function getForumCount(onSuccess, onError) {
 	}
 }
 
-function updateUnreadCount(count) {
+function updateUnreadCount(count, response) {
 	for (var i in count) {
 		localStorage[i] = count[i];
 	}
+	localStorage["response"] = response;
 }
 
 function deleteUnreadCount() {
@@ -389,4 +394,41 @@ if (chrome.runtime && chrome.runtime.onStartup) {
 		startRequest({scheduleRequest:false, showLoadingAnimation:false});
 		updateIcon();
 	});
+}
+
+function showMessage(titleMsg, forumList) {
+	var opt = {
+		type: "basic",
+		title: titleMsg,
+		message: forumList.join(", "),
+		iconUrl: "images/icon_48.png",
+		requireInteraction: true
+	}
+	chrome.notifications.create ("newMsg", opt, function(){});
+	chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
+		alert ("notificationId:" + notificationId + " buttonIndex:" + buttonIndex);
+	});
+	var msgSound = new Audio("audio/abstudios_water-drop.mp3");
+	/*var msgSound = new Audio("audio/kastenfrosch_message.mp3");*/
+	msgSound.play();
+
+	//include this line if you want to clear the notification after 5 seconds
+	//setTimeout(function() {chrome.notifications.clear("newMsg", function(){});}, 5000);
+}
+
+function replaceObj(obj) {
+	var a = obj.DML;
+	var result = [];
+	var author = [];
+	for(i=0; i<a.length;i++){
+		var e = a[i];
+		if(e.name){
+			result.push(e.name);
+		}
+		if(e.author == true){
+			author.push(e.name);
+		}
+	}
+	console.log(result);
+	console.log(author);
 }
