@@ -260,13 +260,15 @@ function getForumCount(onSuccess, onError) {
 					if (!response.ERROR) {
 						localStorage["domain"] = this._domain;
 
-						var selectRating = response.selectRating.filter(function(p) { return p.type === "obligatorySelect" });
-						var selectRatingLen = selectRating.length;
-						var selectRatingAuthorLen = selectRating.filter(function(p) { return p.author === true }).length;
+						var selectRating = response.selectRating;
 
-						var selectOptional = response.selectRating.filter(function(p) { return p.type === "optionalSelect" });
+						var selectObligatory = (selectRating) ? selectRating.filter(function(p) { return p.type === "obligatorySelect" }) : undefined;
+						var selectRatingLen = (selectObligatory) ? selectObligatory.length : 0;
+						var selectRatingAuthorLen = (selectObligatory) ? selectObligatory.filter(function(p) { return p.author === true }).length : 0;
+
+						var selectOptional = (selectRating) ? selectRating.filter(function(p) { return p.type === "optionalSelect" }) : undefined;
 						var selectOptionalLen = (selectOptional) ? selectOptional.length : 0;
-						var selectOptionalAuthorLen = selectOptional.filter(function(p) { return p.author === true }).length;
+						var selectOptionalAuthorLen = (selectOptional) ? selectOptional.filter(function(p) { return p.author === true }).length : 0;
 
 						var selectLearning = response.selectLearning;
 						var selectLearningLen = (selectLearning) ? selectLearning.length : 0;
@@ -276,8 +278,8 @@ function getForumCount(onSuccess, onError) {
 						var otherLen = (other) ? other.length : 0;
 
 						var dml = response.DML;
-						var dmlLen = dml.length;
-						var dmlAuthorLen = dml.filter(function(p) { return p.author === true }).length;
+						var dmlLen = (dml) ? dml.length : 0;
+						var dmlAuthorLen = (dml) ? dml.filter(function(p) { return p.author === true }).length : 0;
 
 						var count = {
 							L    : selectLearningLen,
