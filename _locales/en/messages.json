@@ -1,8 +1,8 @@
 {
 "sqlexcheck_name":{"message":"Sql-ex Forum Checker"},
 "sqlexcheck_description":{"message":"Displays the number of unread forums on sql-ex. You can also click the extension icon to open appropriate stage's forums."},
-"sqlexcheck_url_ru":{"message":"http://www.sql-ex.ru"},
-"sqlexcheck_url_en":{"message":"http://www.sql-ex.com"},
+"sqlexcheck_url_ru":{"message":"sql-ex.ru"},
+"sqlexcheck_url_en":{"message":"sql-ex.com"},
 "sqlexcheck_node_error":{"message":"Error: feed retrieved, but no &lt;fullcount&gt; node found"},
 "sqlexcheck_exception":{"message":"exception: $1","placeholders":{"1":{"content":"$1"}}},
 "sqlexcheck_options_title":{"message":"Options"},

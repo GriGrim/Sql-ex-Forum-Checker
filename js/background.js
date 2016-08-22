@@ -16,24 +16,25 @@ var requestTimerId;
 
 function getSqlexUrl(forumName) {
 	var url = (window.navigator.language == "ru") ? chrome.i18n.getMessage("sqlexcheck_url_ru") : chrome.i18n.getMessage("sqlexcheck_url_en");
+	var domain = (localStorage.hasOwnProperty("domain")) ? localStorage["domain"] : "www.";
 	switch(forumName) {
 		case "L":
-			return url + "/forum/Lforum.php";
+			return "http://" + domain + url + "/forum/Lforum.php";
 			break;
 		case "R":
-			return url + "/forum/forum.php";
+			return "http://" + domain + url + "/forum/forum.php";
 			break;
 		case "JSON":
 			return url + "/mobil/extension.php";
 			break;
 		default:
-			return url + "/";
+			return "http://" + domain + url + "/";
 			break;
 	}
 }
 
-function getFeedUrl() {
-	return getSqlexUrl("JSON");
+function getFeedUrl(domain) {
+	return "http://" + domain + getSqlexUrl("JSON");
 }
 
 function isSqlexUrl(url) {
@@ -207,6 +208,10 @@ function startRequest(params) {
 
 function getForumCount(onSuccess, onError) {
 	var xhr = new XMLHttpRequest();
+	var domains = ["www.", ""];
+	var domain;
+	var currentDomainNum = -1;
+
 	var abortTimerId = window.setTimeout(function() {
 		xhr.abort();  // synchronously calls onreadystatechange
 	}, requestTimeout);
@@ -227,6 +232,23 @@ function getForumCount(onSuccess, onError) {
 		invokedErrorCallback = true;
 	}
 
+	function tryNextUrl() {
+		var nextUrl;
+		currentDomainNum += 1;
+		if (currentDomainNum < domains.length) {
+			if (!localStorage.hasOwnProperty("domain")) {
+				domain = domains[currentDomainNum];
+			}
+			else {
+				domain = localStorage["domain"];
+			}
+			nextUrl = getFeedUrl(domain);
+			xhr._domain = domain;
+			xhr.open("GET", nextUrl, true);
+			xhr.send(null);
+		}
+	}
+
 	try {
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState != 4)
@@ -236,6 +258,8 @@ function getForumCount(onSuccess, onError) {
 				try {
 					var response = JSON.parse(xhr.responseText);
 					if (!response.ERROR) {
+						localStorage["domain"] = this._domain;
+
 						var selectRating = response.selectRating.filter(function(p) { return p.type === "obligatorySelect" });
 						var selectRatingLen = selectRating.length;
 						var selectRatingAuthorLen = selectRating.filter(function(p) { return p.author === true }).length;
@@ -270,6 +294,10 @@ function getForumCount(onSuccess, onError) {
 						handleSuccess(count);
 						return;
 					}
+					else {
+						localStorage.removeItem("domain");
+						tryNextUrl();
+					}
 				} catch(e) {
 					console.error(e);
 					//alert(e); //error in the above string(in this case,yes)!
@@ -283,8 +311,7 @@ function getForumCount(onSuccess, onError) {
 			handleError();
 		};
 
-		xhr.open("GET", getFeedUrl(), true);
-		xhr.send(null);
+		tryNextUrl();
 	} catch(e) {
 		console.error(chrome.i18n.getMessage("sqlexcheck_exception", e));
 		handleError();
@@ -303,10 +330,6 @@ function deleteUnreadCount() {
 			localStorage.removeItem(attr);
 		}
 	}
-}
-
-function ease(x) {
-	return (1-Math.sin(Math.PI/2+x*Math.PI))/2;
 }
 
 function onInit() {
