@@ -1,5 +1,6 @@
 ﻿var background = chrome.extension.getBackgroundPage();
 var gray = "#d8d8d8";
+var black = "#000";
 var forumList = ["DML", "DMLA", "L", "LA", "O", "OA", "Other", "R", "RA"];
 
 // Restores number of unread topics from localStorage
@@ -10,7 +11,12 @@ function restore_data() {
 		forumName = forumList[i];
 		count = document.getElementById(forumName);
 		count.innerHTML = (localStorage.hasOwnProperty(forumName) ? localStorage[forumName] : "—");
-		if (localStorage[forumName] == 0) { count.style.color = gray; }
+		if (localStorage[forumName] == 0) {
+			count.style.color = gray;
+		}
+		else {
+			count.style.color = black;
+		}
 	}
 }
 
